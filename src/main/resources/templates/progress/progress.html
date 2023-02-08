@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/commLayout :: commLayout(~{this::head}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="sb-nav-fixed">
+<main class="mt-5 pt-5">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Board</h1>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <a class="btn btn-primary float-end" href="/write"> <!-- <i class="fas fa-table me-1"></i> -->
+                    <i class="fas fa-edit"></i> 글 작성
+                </a>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>글번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                                                <th>조회수</th>
+                    </tr>
+                    </thead>
+                    <th:block th:each="dto : ${progressList}">
+                        <tbody>
+                        <tr>
+                            <td th:text="${dto.bno}"></td>
+                            <td th:text="${dto.title}"></td>
+                            <td th:text="${dto.writerName}"></td>
+                            <td th:text="${dto.createdDate}"></td>
+                            <td th:text="${dto.count}"></td>
+                        </tr>
+                        </tbody>
+                    </th:block>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+
+
+</html>
