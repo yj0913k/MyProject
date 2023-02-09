@@ -15,12 +15,17 @@ public class EmployeeController {
 
 
     @PostMapping("/signUp")
-    public String singUp(EmployeeInsertDTO dto) {
+    public String signUp(EmployeeInsertDTO dto) {
         service.save(dto);
-        return "redirect:/employee/regtration";
+        return "redirect:/";
     }
 
-    @GetMapping("/user/login")
+    @GetMapping("/user/signUp")
+    public String singUp() {
+        return "sign/signUp";
+    }
+
+    @GetMapping("/user/signIn")
     public String login() {
         return "sign/signIn";
     }

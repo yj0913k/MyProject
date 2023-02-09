@@ -17,8 +17,8 @@ import java.util.Set;
 @Entity
 public class EmployeeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long no;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private long no;
 
     @Column(nullable = false)
     private String email; // 로그인 이메일

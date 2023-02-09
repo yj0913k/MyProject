@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.example.junproject.security.MyRole.USER;
+
 @AllArgsConstructor
 @Data
 public class EmployeeInsertDTO {
@@ -17,6 +19,10 @@ public class EmployeeInsertDTO {
     private boolean deleted; //삭제여부 0:탈퇴
     private String role;
 
+    public EmployeeInsertDTO() {
+
+    }
+
     public EmployeeEntity toEntity(PasswordEncoder pe) {
         return EmployeeEntity.builder()
                 .no(no)
@@ -24,7 +30,7 @@ public class EmployeeInsertDTO {
                 .name(name)
                 .pass(pe.encode(pass))
                 .build()
-                .addRole(MyRole.valueOf(role));
+                .addRole(USER);
     }
 
 }

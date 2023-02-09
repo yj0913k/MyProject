@@ -13,8 +13,10 @@ public class SecurityConfig {
 
     @Bean
     PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     MyUserDetailsService customUserDetailsService() {
         return new MyUserDetailsService();
@@ -29,32 +31,30 @@ public class SecurityConfig {
         http
                 //url 보안설정
                 .authorizeRequests(authorize -> authorize
-                        //윗줄에서 적용한 주소나 패턴이 우선적용됩니다.
-                        .antMatchers("/css/**","/js/**","/images/**").permitAll()
-                        .antMatchers("/progress/**").hasRole("ADMIN") //인증권한 ADMIN이 필요하다. 권한 =(ROLE_ADMIN)
-                        .antMatchers("/member/signup","/common/**").permitAll()//인증없이 접속할수 있는 주소나 패턴
+                                //윗줄에서 적용한 주소나 패턴이 우선적용됩니다.
+                                .antMatchers("/css/**", "/js/**", "/images/**","signUp").permitAll()
+                                .antMatchers("/user/**", "/common/**").permitAll()//인증없이 접속할수 있는 주소나 패턴
+                                .antMatchers("/progress/**").hasRole("ADMIN") //인증권한 ADMIN이 필요하다. 권한 =(ROLE_ADMIN)
 //                        .antMatchers("/**").permitAll()//인증없이 접속할수 있음
-                        .anyRequest().authenticated()//모든 페이지에 접속제한.
+                                .anyRequest().authenticated()//모든 페이지에 접속제한.
 
                 )
-                .formLogin(formLogin->formLogin
-                        .loginPage("/user/login")
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/user/signIn")
                         .loginProcessingUrl("/login") //form태그 액션 설정.
                         .usernameParameter("email")// username 을 email 로 설정
                         .passwordParameter("pass")//  password 를 pass 로 변경
-                        .defaultSuccessUrl("/",true) //인증 성공시 접속페이지 "/"이므로 index.
+                        .defaultSuccessUrl("/", true) //인증 성공시 접속페이지 "/"이므로 index.
                         .permitAll()
 
 
                 )
-                .csrf(csrf->csrf.disable()) //토큰으로 대체가능 위조떄문에
+                .csrf(csrf -> csrf.disable()) //토큰으로 대체가능 위조떄문에
 
 
         ;
         return http.build();
     }
-
-
 
 
 }
