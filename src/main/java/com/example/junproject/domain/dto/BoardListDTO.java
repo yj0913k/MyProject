@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class BoardListDTO {
     private long bno;
     private String title;
+    private String content;
     private LocalDateTime createdDate;
     private long count;
     private String writerName;
@@ -16,6 +17,7 @@ public class BoardListDTO {
     public BoardListDTO(BoardEntity entity) {
         this.bno = entity.getNo();
         this.writerName = entity.getWriter().getName();
+        this.content = entity.getContent();
         this.title = entity.getTitle();
         this.createdDate = entity.getCreatedDateTime();
         this.count = entity.getCount();

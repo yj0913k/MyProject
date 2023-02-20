@@ -2,7 +2,6 @@ package com.example.junproject.controller;
 
 import com.example.junproject.domain.dto.BoardInsertDTO;
 import com.example.junproject.domain.dto.BoardListDTO;
-import com.example.junproject.domain.entity.BoardEntity;
 import com.example.junproject.repository.BoardEntityRepository;
 import com.example.junproject.security.MyUserDetails;
 import com.example.junproject.service.BoardService;
@@ -11,9 +10,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +33,7 @@ public class BoardController {
 
 
     @GetMapping("/write") //글쓰기페이지이동
-    public String write(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails)
-    {
+    public String write(Model model, @AuthenticationPrincipal MyUserDetails myUserDetails) {
         service.progressList(model, myUserDetails.getEmail());
 
         return "progress/write";
@@ -49,7 +47,10 @@ public class BoardController {
         return "redirect:/progress";
     }
 
-
-
-
+    @GetMapping("/write/{bno}")
+    public String boardView(@PathVariable long bno, Model model) {
+        List<BoardListDTO> list = boardEntityRepository.findById(bno).stream().map(BoardListDTO::new).collect(Collectors.toList());
+        model.addAttribute("list", list);
+        return "progress/detail";
+    }
 }

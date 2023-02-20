@@ -31,7 +31,7 @@
                         <tbody>
                         <tr>
                             <td th:text="${dto.bno}"></td>
-                            <td th:text="${dto.title}"></td>
+                            <td><a th:href="@{|/write/${dto.bno}|}" th:text="${dto.title}"></a></td>
                             <td th:text="${dto.writerName}"></td>
                             <td th:text="${dto.createdDate}"></td>
                             <td th:text="${dto.count}"></td>

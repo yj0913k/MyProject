@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class BoardInsertDTO {
 
+    private int bno;
     private String content;
     private String title;
 

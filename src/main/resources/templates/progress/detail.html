@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/commLayout :: commLayout(~{this::head}, ~{::main})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body class="sb-nav-fixed">
+
+</body>
+<main>
+    <div>
+        <div th:each="list : ${list}">
+            <li th:text="${list.title}"></li>
+            <li th:text="${list.content}" style="width:100%;height:150px"></li>
+            <li th:text="${list.writerName}"></li>
+        </div>
+    </div>
+</main>
+
+
+</html>

@@ -45,5 +45,12 @@ public class BoardServiceProcess implements BoardService {
         return null;
     }
 
+    @Override
+    public BoardEntity boardView(long bno, Model model) {
+        return boardEntityRepository.findById(bno).get();
+    }
+
+
+
 
 }
