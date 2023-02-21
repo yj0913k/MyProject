@@ -13,14 +13,16 @@ public class BoardListDTO {
     private LocalDateTime createdDate;
     private long count;
     private String writerName;
+    private String email;
 
     public BoardListDTO(BoardEntity entity) {
         this.bno = entity.getNo();
-        this.writerName = entity.getWriter().getName();
+        this.writerName = entity.getName();
         this.content = entity.getContent();
         this.title = entity.getTitle();
         this.createdDate = entity.getCreatedDateTime();
         this.count = entity.getCount();
+        this.email = entity.getEmail();
 
     }
 

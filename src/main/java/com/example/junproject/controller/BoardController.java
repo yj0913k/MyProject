@@ -2,6 +2,7 @@ package com.example.junproject.controller;
 
 import com.example.junproject.domain.dto.BoardInsertDTO;
 import com.example.junproject.domain.dto.BoardListDTO;
+import com.example.junproject.domain.dto.BoardUpdateDTO;
 import com.example.junproject.repository.BoardEntityRepository;
 import com.example.junproject.security.MyUserDetails;
 import com.example.junproject.service.BoardService;
@@ -9,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,9 +41,9 @@ public class BoardController {
 
     @PostMapping("/write")
     public String boardSave(BoardInsertDTO dto, @AuthenticationPrincipal MyUserDetails userDetails) {
-        long eno = userDetails.getMno();
+        String email = userDetails.getEmail();
         String writer = userDetails.getName();
-        service.boardSave(dto, eno);
+        service.boardSave(dto, email);
         return "redirect:/progress";
     }
 
@@ -52,5 +52,25 @@ public class BoardController {
         List<BoardListDTO> list = boardEntityRepository.findById(bno).stream().map(BoardListDTO::new).collect(Collectors.toList());
         model.addAttribute("list", list);
         return "progress/detail";
+    }
+
+    @GetMapping("/write/edit/{bno}")
+    public String boardEditing(@PathVariable long bno, Model model, @AuthenticationPrincipal MyUserDetails userDetails) {
+        long mno = userDetails.getMno();
+        List<BoardListDTO> list = boardEntityRepository.findById(bno).stream().map(BoardListDTO::new).collect(Collectors.toList());
+        model.addAttribute("list", list);
+        return "progress/edit";
+    }
+
+    @PutMapping("/write/editing/{bno}")
+    public String boardEdit(@PathVariable long bno, BoardUpdateDTO dto) {
+        service.boardUpdate(bno, dto);
+        return "redirect:/write/{bno}";
+    }
+
+    @DeleteMapping("/write/delete/{bno}")
+    public String boardDelete(@PathVariable long bno) {
+        service.boardDelete(bno);
+        return "redirect:/progress";
     }
 }

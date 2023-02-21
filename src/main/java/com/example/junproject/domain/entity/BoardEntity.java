@@ -1,5 +1,6 @@
 package com.example.junproject.domain.entity;
 
+import com.example.junproject.domain.dto.BoardUpdateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +27,9 @@ public class BoardEntity { //사이드바 프로젝트 진행 현황
     private String title;
 
     @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     @Lob
     private String content;
 
@@ -33,7 +37,8 @@ public class BoardEntity { //사이드바 프로젝트 진행 현황
     @Column(nullable = true)
     private long count;
 
-
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
     @CreationTimestamp
@@ -48,11 +53,19 @@ public class BoardEntity { //사이드바 프로젝트 진행 현황
 
     @JoinColumn
     @ManyToOne(fetch = FetchType.EAGER)
-    private EmployeeEntity writer;
+    private EmployeeEntity employeeEntity;
 
 
-    public BoardEntity setWriter(EmployeeEntity writer) {
-        this.writer = writer;
+    public BoardEntity setWriter(EmployeeEntity employeeEntity) {
+        this.name = employeeEntity.getName();
+        this.email = employeeEntity.getEmail();
+        return this;
+    }
+
+    //편의 메서드 (수정)
+    public BoardEntity update(BoardUpdateDTO dto) {
+        this.title=dto.getTitle();
+        this.content=dto.getContent();
         return this;
     }
 }

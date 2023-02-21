@@ -4,6 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script>
+        function deleteCheck() {
+            if (confirm("정말 삭제하시겠습니까??") == true) {    //확인
+                document.removefrm.submit();
+            } else {   //취소
+                return false;
+            }
+        }
+
+    </script>
 </head>
 <body class="sb-nav-fixed">
 <main class="mt-5 pt-5">
@@ -24,7 +34,8 @@
                         <th>제목</th>
                         <th>작성자</th>
                         <th>작성일</th>
-                                                <th>조회수</th>
+                        <th>조회수</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <th:block th:each="dto : ${progressList}">
@@ -35,6 +46,17 @@
                             <td th:text="${dto.writerName}"></td>
                             <td th:text="${dto.createdDate}"></td>
                             <td th:text="${dto.count}"></td>
+                            <td><span th:if="${#authentication.name == dto.email}"/><a
+                                    th:href="@{|/write/edit/${dto.bno}|}">수정하기</a></span></td>
+
+
+                            <td><span th:if="${#authentication.name == dto.email}"/>
+                                <form th:action="|/write/delete/${dto.bno}|" method="POST" name="removefrm">
+                                    <input type="hidden" name="_method" value="DELETE"/>
+                                    <button type="submit" onclick="deleteCheck()">삭제하기</button>
+                                </form>
+                            </td>
+
                         </tr>
                         </tbody>
                     </th:block>

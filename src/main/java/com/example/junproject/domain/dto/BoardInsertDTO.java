@@ -11,12 +11,9 @@ public class BoardInsertDTO {
     private int bno;
     private String content;
     private String title;
-
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
     private long writerNo;
-
-
     private long count;
 
     public BoardEntity toEntity(){

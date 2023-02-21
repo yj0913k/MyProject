@@ -2,6 +2,7 @@ package com.example.junproject.service.Impl;
 
 import com.example.junproject.domain.dto.BoardInsertDTO;
 import com.example.junproject.domain.dto.BoardListDTO;
+import com.example.junproject.domain.dto.BoardUpdateDTO;
 import com.example.junproject.domain.entity.BoardEntity;
 import com.example.junproject.repository.BoardEntityRepository;
 import com.example.junproject.repository.EmployeeEntityRepository;
@@ -22,16 +23,18 @@ public class BoardServiceProcess implements BoardService {
 
     @Autowired
     BoardEntityRepository boardEntityRepository;
+
+
     @Autowired
     private EmployeeEntityRepository employeeEntityRepository;
 
     @Override
-    public void boardSave(BoardInsertDTO dto, long writerNo) {
+    public void boardSave(BoardInsertDTO dto, String email) {
 
-        BoardEntity entity = boardEntityRepository
-                .save(dto.toEntity().setWriter(employeeEntityRepository.findById(writerNo).get()));
+        boardEntityRepository.save(dto.toEntity().setWriter(employeeEntityRepository.findByEmail(email).get()));
 
     }
+
 
 
     @Transactional
@@ -48,9 +51,20 @@ public class BoardServiceProcess implements BoardService {
     @Override
     public BoardEntity boardView(long bno, Model model) {
         return boardEntityRepository.findById(bno).get();
+
+
     }
 
+    @Transactional
+    @Override
+    public void boardUpdate(long bno, BoardUpdateDTO dto) {
+        boardEntityRepository.findById(bno).map(entity -> entity.update(dto));
+    }
 
+    @Override
+    public void boardDelete(long bno) {
+        boardEntityRepository.deleteById(bno);
+    }
 
 
 }

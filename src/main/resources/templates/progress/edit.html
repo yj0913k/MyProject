@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/commLayout :: commLayout(~{this::head}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body class="sb-nav-fixed">
+
+</body>
+<main class="container" th:each="list : ${list}">
+
+    <!--    /////////////////////////////////////////////-->
+    <form th:action="|/write/editing/${bno}|" method="POST">
+            <header class="py-5 text-center">
+
+                <textarea th:text="${list.title}" id="title" name="title"></textarea>
+            </header>
+
+            <!--        게시글 수정 post로 넘김-->
+
+
+            <div class="row g-5" th:each="list : ${list}">
+                <section class="col-md-3 col-lg-4 order-md-last">
+                    <aside>
+                        <p th:text="${list.writerName}">Jyc</p>
+                        <p>
+                            <time datetime="2022-01-01" th:text="${list.createdDate}">2022-01-01</time>
+                        </p>
+                        <input type="hidden" name="_method" value="PUT"/>
+                        <button type="submit">수정완료</button>
+
+                    </aside>
+                </section>
+
+                <article id="article-content" class="col-md-9 col-lg-8">
+                    <textarea th:text="${list.content}" name="content" id="content"
+                              style="width: 660px; height: 700px"></textarea>
+                </article>
+
+
+            </div>
+    </form>
+
+</main>
+
+
+</html>
