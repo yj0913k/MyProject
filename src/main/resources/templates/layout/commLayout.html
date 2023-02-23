@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:fragment="commLayout(head,main)">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +15,12 @@
         }
         function signUpPage(){
             window.location.href = "/user/signUp";
+
         }
+        function logoutPage(){
+            window.location.href = "/logout"
+        }
+
     </script>
     <title>Title</title>
     <th:block th:replace="${head}"/>
@@ -40,8 +46,9 @@
             </form>
 
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2" id="login" onclick='loginPage()'>Login</button>
-                <button type="button" class="btn btn-warning" id="signUp" onclick='signUpPage()'>Sign-up</button>
+                <button type="button" class="btn btn-outline-light me-2" id="login" onclick='loginPage()'  sec:authorize="!isAuthenticated()">Login</button>
+                <button type="button"  class="btn btn-outline-light me-2" id="logout" onclick='logoutPage()'  sec:authorize="isAuthenticated()">Logout</button>
+                <button type="button" class="btn btn-warning" id="signUp" onclick='signUpPage()' sec:authorize="!isAuthenticated()">Sign-up</button>
             </div>
         </div>
     </div>
