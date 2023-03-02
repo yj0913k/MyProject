@@ -74,6 +74,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 application.properties
+kakao.properties
 
 # Editor-based Rest Client
 .idea/httpRequests
